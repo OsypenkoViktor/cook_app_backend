@@ -15,8 +15,9 @@ class RolesTableSeeder extends Seeder
      */
     public function run(): void
     {
-       $user=Role::firstOrcreate(["name"=>"site_user"]);
-       $admin=Role::firstOrcreate(["name"=>"admin"]);
+
+       $user=Role::create(["name"=>"site_user"]);
+       $admin=Role::create(["name"=>"admin"]);
        //permissions
        $admin->givePermissionTo('access to admin panel','edit notes','delete notes');
         $adminAccount = User::create([

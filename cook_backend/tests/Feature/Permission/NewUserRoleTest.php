@@ -26,8 +26,7 @@ class NewUserRoleTest extends TestCase
 
         $this->post("/register",$userData);
         $user = User::where('email', $userData['email'])->first();
-        $this->assertNotNull($user); // Проверяем, что пользователь был создан
-
-        $this->assertTrue($user->hasRole('site_user')); // Проверяем, что пользователю присвоена роль "site_user"
+        $this->assertNotNull($user);
+        $this->assertTrue($user->hasRole('site_user'));
     }
 }
