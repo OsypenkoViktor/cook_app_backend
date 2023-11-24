@@ -19,7 +19,7 @@ class RolesTableSeeder extends Seeder
        $user=Role::create(["name"=>"site_user"]);
        $admin=Role::create(["name"=>"admin"]);
        //permissions
-       $admin->givePermissionTo('access to admin panel','edit notes','delete notes');
+       $admin->givePermissionTo('access to admin panel','edit notes','delete notes',"moderate products");
         $adminAccount = User::create([
             "name"=>"admin",
             'email' => "vetdetmett@gmail.com",

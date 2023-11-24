@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
+use App\Models\Product;
 
 
 class DatabaseSeeder extends Seeder
@@ -20,6 +21,7 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class
         ]);
+        Product::factory()->count(50)->create();
         //\App\Models\Product::factory(10)->create();
 
         // \App\Models\User::factory()->create([

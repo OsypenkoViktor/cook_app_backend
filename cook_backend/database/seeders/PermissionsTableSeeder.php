@@ -16,5 +16,6 @@ class PermissionsTableSeeder extends Seeder
         Permission::create(['name' => 'access to admin panel']);
         Permission::create(['name' => 'edit notes']);
         Permission::create(['name' => 'delete notes']);
+        Permission::create(['name' => 'moderate products']);
     }
 }

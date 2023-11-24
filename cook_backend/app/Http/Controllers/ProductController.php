@@ -2,18 +2,42 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Models\Product;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\ValidationException;
+use function Webmozart\Assert\Tests\StaticAnalysis\length;
 
 class ProductController extends Controller
 {
+
+
     /**
      * Display a listing of the resource.
+     * return only moderated products to user
+     * return all products to admin
      */
     public function index()
     {
-        //
+        // handle response to admin
+        $user = Auth::user();
+        if($user->can("moderate products")){
+            $allProducts=Product::all();
+            if(!$allProducts->isEmpty()){
+                return response()->json($allProducts,200);
+            } else{
+                return response()->json(['message'=>'no products found'],404);
+            }
+        }
+        //handle response to user
+        $moderatedProducts = Product::where("isModerated",true)->get();
+        if(!$moderatedProducts->isEmpty()){
+            $this->authorize("viewAny",Product::class);
+            return response()->json($moderatedProducts);
+        }else{
+            return response()->json(['message'=>'no products found'],404);
+        }
     }
 
     /**
@@ -31,7 +55,7 @@ class ProductController extends Controller
                 "carbohydrates"=>"required|numeric",
                 "description"=>"required|string|min:20"
             ]);
-
+                $this->authorize("create",Product::class);
                 $newProductId=Product::create($validData);
                 return response()->json([
                     "message"=>"Product ID $newProductId created",
@@ -47,24 +71,35 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        //
+            $this->authorize("view",$product);
+            return response()->json($product);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        $this->authorize("update",$product);
+        $isUpdated = $product->update($request->all());
+        if($isUpdated){
+            return response()->json(["message"=>"Product id $product->id has been updated"],200);
+        }else{
+            return response()->json(["message"=>"Error has occured during the product id $product->id update"],400);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        //
+            $this->authorize("delete",$product);
+            $product->delete();
+            return response()->json([
+                'message'=>"Product ID $id has been deleted"
+            ],200);
     }
 }

@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Policies\ProductPolicy;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,4 +20,4 @@ use App\Http\Controllers\ProductController;
     return $request->user();
 });
 
-Route::apiResource("products",ProductController::class);
+Route::apiResource("products",ProductController::class)->middleware("web");
