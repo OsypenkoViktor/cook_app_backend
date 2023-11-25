@@ -26,4 +26,9 @@ class Product extends Model
     {
         return $this->hasMany(Product::class, 'parent_id');
     }
+
+    public function processes()
+    {
+        return $this->hasMany(CookProcess::class);
+    }
 }

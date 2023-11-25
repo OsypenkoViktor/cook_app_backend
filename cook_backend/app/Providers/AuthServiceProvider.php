@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\CookProcess;
+use App\Policies\CookProcessPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 use App\Models\Product;
@@ -15,7 +17,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-     //  Product::class=>ProductPolicy::class
+        Product::class=>ProductPolicy::class,
+        CookProcess::class=>CookProcessPolicy::class
     ];
 
     /**

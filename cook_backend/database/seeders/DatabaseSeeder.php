@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\CookProcess;
 use Illuminate\Database\Seeder;
 use Database\Seeders\PermissionsTableSeeder;
 use Database\Seeders\RolesTableSeeder;
@@ -21,7 +22,7 @@ class DatabaseSeeder extends Seeder
             PermissionsTableSeeder::class,
             RolesTableSeeder::class
         ]);
-        Product::factory()->count(50)->create();
+        CookProcess::factory()->count(50)->create();
         //\App\Models\Product::factory(10)->create();
 
         // \App\Models\User::factory()->create([

@@ -26,7 +26,7 @@ class ProductsTest extends TestCase
             "description"=>"some test description for product"
         ];
         $response=$this->withHeader("Accept","application/json")->post("/api/products",$productData);
-        $response->assertStatus(403);
+        $response->assertStatus(401);
         $newProduct=Product::where('name',$productData['name'])->first();
         $this->assertNull($newProduct);
 

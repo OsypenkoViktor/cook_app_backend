@@ -28,11 +28,13 @@ class ProductFactory extends Factory
     }
 
 
-    public function isModerated(){
+    public function isModerated()
+    {
         return $this->state(function (array $attributes){
             return [
               "isModerated"=>true
             ];
-        });
+        }
+        );
     }
 }

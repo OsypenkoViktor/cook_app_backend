@@ -23,7 +23,7 @@ class ProductController extends Controller
         // handle response to admin
         $user = Auth::user();
         if($user->can("moderate products")){
-            $allProducts=Product::all();
+            $allProducts=Product::with("processes")->get();
             if(!$allProducts->isEmpty()){
                 return response()->json($allProducts,200);
             } else{
