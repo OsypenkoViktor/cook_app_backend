@@ -60,7 +60,6 @@ class ProductController extends Controller
                 return response()->json([
                     "message"=>"Product ID $newProductId created",
                 ]);
-
         }catch(ValidationException $e){
             return response()->json([
                 "errors" => $e->validator->errors()->all()
@@ -99,7 +98,7 @@ class ProductController extends Controller
             $this->authorize("delete",$product);
             $product->delete();
             return response()->json([
-                'message'=>"Product ID $id has been deleted"
+                'message'=>"Product ID $product->id has been deleted"
             ],200);
     }
 }

@@ -21,8 +21,9 @@ use App\Http\Controllers\CookProcessController;
     return $request->user();
 });
 Route::middleware("auth")->group(function (){
+    //resource controller for products
     Route::apiResource("products",ProductController::class);
-
+    //additional routes for cook processes
     Route::prefix("products")->group(function (){
         Route::get("{product}/{cookProcess}",[CookProcessController::class,"show"]);
         Route::post("{product}/{cookProcess}",[CookProcessController::class,"store"])->middleware('can:create,cookProcess');
