@@ -6,6 +6,7 @@ use Illuminate\Auth\Access\Response;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 
 class ProductPolicy
 {
@@ -40,6 +41,7 @@ class ProductPolicy
      */
     public function update(User $user, Product $product): bool
     {
+        Log::debug("product policy launched");
         return $user->can('edit notes');
     }
 

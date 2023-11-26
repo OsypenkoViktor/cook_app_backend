@@ -31,4 +31,9 @@ class Product extends Model
     {
         return $this->hasMany(CookProcess::class);
     }
+
+    public function dishes()
+    {
+        return $this->belongsToMany(Dish::class);
+    }
 }

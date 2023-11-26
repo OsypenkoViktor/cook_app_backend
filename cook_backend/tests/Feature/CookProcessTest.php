@@ -18,6 +18,26 @@ class CookProcessTest extends TestCase
      */
     use RefreshDatabase;
 
+    public function test_cook_process_can_be_created(): void
+    {
+        $this->seed(PermissionsTableSeeder::class);
+        $this->seed(RolesTableSeeder::class);
+        $user=User::factory()->create();
+        $user->assignRole('site_user');
+        $this->actingAs($user);
+        $product=Product::factory()->create();
+        $processData = [
+            "name"=>'testname',
+            "duration"=>fake()->numberBetween(1,10),
+            "cookPresenceInterval"=>fake()->numberBetween(0,5),
+            "description"=>fake()->text(50),
+            "product_id"=>$product->id
+        ];
+        $response=$this->post("/api/products/".$product->id . '/cookProcessCreate',$processData);
+        $response->assertStatus(200);
+        $createdProcess = CookProcess::where('name','testname')->first();
+        $this->assertNotNull($createdProcess);
+    }
     public function test_cook_process_can_be_received(): void
     {
         $this->seed(PermissionsTableSeeder::class);
