@@ -24,4 +24,14 @@ class Dish extends Model
     {
             return $this->belongsToMany(Product::class);
     }
+
+    public function images(){
+        return $this->morphMany(Image::class,'imageable');
+    }
+    public function categories(){
+        return $this->belongsToMany(Category::class);
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class);
+    }
 }

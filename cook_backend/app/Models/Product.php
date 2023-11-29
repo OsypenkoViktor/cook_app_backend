@@ -36,4 +36,7 @@ class Product extends Model
     {
         return $this->belongsToMany(Dish::class);
     }
+    public function images(){
+        return $this->morphMany(Image::class,'imageable');
+    }
 }

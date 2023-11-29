@@ -21,7 +21,7 @@ use App\Http\Controllers\CookProcessController;
  Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::middleware('auth')->group(function (){
+Route::middleware('auth')->prefix('api')->group(function (){
     //resource controller for products
     Route::apiResource("products",ProductController::class);
     //additional routes for cook processes
@@ -32,14 +32,22 @@ Route::middleware('auth')->group(function (){
         Route::patch("{product}/{cookProcess}",[CookProcessController::class,"update"])->middleware('can:update,cookProcess');
     });
     Route::prefix('dishes')->group(function (){
-        Route::get('/',[DishController::class,'show']);
+        Route::get('/',[DishController::class,'showAll']);
         Route::post('/',[DishController::class,'store'])->middleware('can:create,App\Models\Dish');
         Route::delete('/{dish}',[DishController::class,'destroy'])->middleware('can:delete,dish');
+        Route::get('/{dish}',[DishController::class,'show']);
         Route::patch('/{dish}',[DishController::class,'update'])->middleware('can:update,cookProcess');
         //assign product to dish
+        Route::get('/{dish}/vote',[DishController::class,'voteDish'])->middleware('can:create,dish');
+        Route::get('/{dish}/comments',[DishController::class,'getComments'])->middleware('can:create,dish');
+        Route::delete('/{dish}/comments/{comment}',[DishController::class,'deleteComment'])->middleware('can:create,dish');
+        Route::patch('/{dish}/comments/{comment}',[DishController::class,'updateComment'])->middleware('can:create,dish');
+        Route::post('/{dish}/comments',[DishController::class,'createComment'])->middleware('can:create,App\Models\Comment');
         Route::post('/{dish}/{product}',[DishController::class,'addProduct'])->middleware('can:create,dish');
         //removing product from dish
         Route::delete('/{dish}/{product}',[DishController::class,'removeProduct'])->middleware('can:delete,dish');
+        //handling comments
+
     });
 });
 

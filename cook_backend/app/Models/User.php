@@ -43,4 +43,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
     ];
+    public function avatar(){
+        return $this->morphMany(Image::class,'imageable');
+    }
+    public function comments(){
+        return $this->hasMany(Comment::class,);
+    }
 }

@@ -24,7 +24,6 @@ class DishPolicy
      */
     public function create(User $user): bool
     {
-       Log::debug("dish policy launched");
        return true;
     }
 

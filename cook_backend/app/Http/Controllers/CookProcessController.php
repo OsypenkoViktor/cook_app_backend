@@ -24,7 +24,6 @@ class CookProcessController extends Controller
      */
     public function store(Request $request, CookProcess $cookProcess)
     {
-        //$this->authorize('create',CookProcess::class);
         $validData = $request->validate([
             "name"=>"string|required|unique:products|",
             'product_id'=>"integer|exists:products,id",

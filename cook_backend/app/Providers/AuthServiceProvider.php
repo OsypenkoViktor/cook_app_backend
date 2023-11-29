@@ -2,8 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\Comment;
 use App\Models\CookProcess;
 use App\Models\Dish;
+use App\Policies\CommentPolicy;
 use App\Policies\CookProcessPolicy;
 use App\Policies\DishPolicy;
 use Illuminate\Auth\Notifications\ResetPassword;
@@ -22,6 +24,7 @@ class AuthServiceProvider extends ServiceProvider
         Product::class=>ProductPolicy::class,
         CookProcess::class=>CookProcessPolicy::class,
         Dish::class=>DishPolicy::class,
+        Comment::class=>CommentPolicy::class,
     ];
 
     /**
